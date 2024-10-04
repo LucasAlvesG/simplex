@@ -49,9 +49,16 @@ public class Main {
     }
 
     private boolean checkOptimality() {
-        // Implementar verificação de otimalidade
-        return false;
+        boolean isOptimal = true;
+        for (int j = 0; j < cols - 1; j++) {
+            if (table[rows - 1][j] < 0) {
+                isOptimal = false;
+                break;
+            }
+        }
+        return isOptimal;
     }
+    
 
     private int findEnteringColumn() {
         // Implementar lógica para encontrar a coluna de entrada
@@ -81,7 +88,7 @@ public class Main {
             {0, 1, 0, 0, 0, 1}
         };
 
-        Main simplex = new Main(3, 5);
+        Main simplex = new Main(3, 6);
         simplex.fillTable(data);
         simplex.print();
 
