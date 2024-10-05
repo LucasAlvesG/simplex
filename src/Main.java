@@ -65,32 +65,16 @@ public class Main {
 
     private int findEnteringColumn() {
         int specificColum = -1;
-        cols = table[0].length;
-        rows = table.length;
-        int [][] result = new int [rows][cols];
-
         if (rows > 0 && cols > 0) {
-            for(int i = 0; i < rows; i++){
-                for(int j = 0; j < cols; j++){
+            for(int i = 0; i < table.length; i++){
+                for(int j = 0; j < table[i].length; j++){
     
-                   result[i][j] = (int) table[i][j];
-            
-                
-                   if(result[i][1] >= -3 && result [i] [1] <= 1){
-                        System.out.println("Encontrou" + j);
-                        specificColum = j;
-                        return specificColum;
+                    System.out.println(table[i][j]);
 
+                   if(table[i][j] < -3 && table[i][j] > 2){
+                     System.out.println(table[i][j]);
                    }
 
-                   if (result[i][j] == -3) {
-                    int [] newB = new int[j];
-                        for(int k = 0; k < j; k++){
-                            newB[k] = result[i][k];
-                        }
-                        System.out.println("Valores até a coluna -3: " + Arrays.toString(newB));
-                    }
-                
                 }
                      
             }
