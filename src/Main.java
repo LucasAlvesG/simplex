@@ -1,7 +1,10 @@
+import java.util.Arrays;
+
 public class Main {
     private int rows, cols;
     private float[][] table;
     private boolean solutionIsUnbounded = false;
+
 
     public static enum ERROR {
         NOT_OPTIMAL,
@@ -61,9 +64,41 @@ public class Main {
     
 
     private int findEnteringColumn() {
-        // Implementar lógica para encontrar a coluna de entrada
-        return 0;
+        int specificColum = -1;
+        cols = table[0].length;
+        rows = table.length;
+        int [][] result = new int [rows][cols];
+
+        if (rows > 0 && cols > 0) {
+            for(int i = 0; i < rows; i++){
+                for(int j = 0; j < cols; j++){
+    
+                   result[i][j] = (int) table[i][j];
+            
+                
+                   if(result[i][1] >= -3 && result [i] [1] <= 1){
+                        System.out.println("Encontrou" + j);
+                        specificColum = j;
+                        return specificColum;
+
+                   }
+
+                   if (result[i][j] == -3) {
+                    int [] newB = new int[j];
+                        for(int k = 0; k < j; k++){
+                            newB[k] = result[i][k];
+                        }
+                        System.out.println("Valores até a coluna -3: " + Arrays.toString(newB));
+                    }
+                
+                }
+                     
+            }
+        }  
+        return specificColum;
     }
+        
+
 
     private float[] calculateRatios(int pivotColumn) {
         // Implementar cálculo de razões
@@ -91,6 +126,7 @@ public class Main {
         Main simplex = new Main(3, 6);
         simplex.fillTable(data);
         simplex.print();
+        simplex.findEnteringColumn();
 
         while (simplex.compute() == ERROR.NOT_OPTIMAL) {
             simplex.print();
