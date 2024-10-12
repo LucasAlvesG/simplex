@@ -4,6 +4,9 @@ public class Main {
     private int rows, cols;
     private float[][] table;
     private boolean solutionIsUnbounded = false;
+    private int [] columSmall;
+    private static int [] rigthCollum;
+    private static float [] quociente;
 
 
     public static enum ERROR {
@@ -35,12 +38,12 @@ public class Main {
         }
     }
 
-    public ERROR compute() {
+    public ERROR compute(float [][] dataArray, int colunaDois) {
         if (checkOptimality()) {
             return ERROR.IS_OPTIMAL;
         }
 
-        int pivotColumn = findEnteringColumn();
+        int pivotColumn = findEnteringColumn(dataArray, colunaDois);
         System.out.println("Pivot Column: " + pivotColumn);
 
         float[] ratios = calculateRatios(pivotColumn);
@@ -63,22 +66,48 @@ public class Main {
     }
     
 
-    private int findEnteringColumn() {
+    private int findEnteringColumn(float [][] arrayNovo, int coluna) {
+       
+       
+        this.rows = 5;
+        this.cols = 6;
+
+        int [] menorLinha = new int[arrayNovo.length];
+        int position = -1;
+        int auxiliar = 0;
+        int posicaoMenor = 0;
         int specificColum = -1;
-        if (rows > 0 && cols > 0) {
-            for(int i = 0; i < table.length; i++){
-                for(int j = 0; j < table[i].length; j++){
+        int [] colunaRigth = new int[arrayNovo.length];
     
-                    System.out.println(table[i][j]);
 
-                   if(table[i][j] < -3 && table[i][j] > 2){
-                     System.out.println(table[i][j]);
-                   }
-
+        for(int k = 0; k < arrayNovo.length; k++){
+            for(int w = 0; w < arrayNovo.length; w++){
+                if (arrayNovo[k][w] < auxiliar) {
+                    auxiliar = (int) arrayNovo[k][w];
+                    posicaoMenor = w;
                 }
-                     
+
+                colunaRigth [k] = (int) arrayNovo[k][coluna - 1]; 
+
             }
-        }  
+        }
+
+        if (rows > 0 && cols > 0) {
+                for(int j = 0; j < arrayNovo.length; j++){
+    
+                    if (position != -1) {
+                        menorLinha [j] = (int) arrayNovo[j][posicaoMenor];
+                    }
+
+                    System.out.println(arrayNovo[j][posicaoMenor]);
+
+                }      
+    
+        }
+        
+        rigthCollum = colunaRigth;
+        columSmall = menorLinha;
+
         return specificColum;
     }
         
@@ -99,21 +128,27 @@ public class Main {
     }
 
     public static void main(String[] args) {
+
+        int coluna = 7;
+        int linha = 3;
+
         // Exemplo de uso
         float[][] data = {
-            {1, -3, -2, 0, 0, 0},
-            {0, 2, 1, 1, 0, 0},
-            {0, 1, 1, 0, 1, 0},
-            {0, 1, 0, 0, 0, 1}
+            {1, -3, -2, 0, 0, 0,0},
+            {0, 2, 1, 1, 0, 0,100},
+            {0, 1, 1, 0, 1, 0,80},
+            {0, 1, 0, 0, 0, 1,40},
         };
 
-        Main simplex = new Main(3, 6);
-        simplex.fillTable(data);
-        simplex.print();
-        simplex.findEnteringColumn();
+        Main simplex = new Main(linha, coluna);
+        //simplex.fillTable(data);
+        //simplex.print();
+        simplex.findEnteringColumn(data, coluna);
 
+        /*   
         while (simplex.compute() == ERROR.NOT_OPTIMAL) {
             simplex.print();
         }
+         */
     }
 }
