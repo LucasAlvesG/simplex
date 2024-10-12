@@ -46,7 +46,7 @@ public class Main {
         int pivotColumn = findEnteringColumn(dataArray, colunaDois);
         System.out.println("Pivot Column: " + pivotColumn);
 
-        float[] ratios = calculateRatios(pivotColumn);
+        float[] ratios = calculateRatios();
         if (solutionIsUnbounded) return ERROR.UNBOUNDED;
         int pivotRow = findSmallestValue(ratios);
 
@@ -67,7 +67,6 @@ public class Main {
     
 
     private int findEnteringColumn(float [][] arrayNovo, int coluna) {
-       
        
         this.rows = 5;
         this.cols = 6;
@@ -113,8 +112,19 @@ public class Main {
         
 
 
-    private float[] calculateRatios(int pivotColumn) {
-        // Implementar cálculo de razões
+    private float[] calculateRatios() {
+        
+        //Dando erro no valor 1 e valor 2 tipo de erro NullPointerException
+        for(int i = 1; i < rigthCollum.length - 1; i++){
+            int valor1 = rigthCollum[i];
+            int valor2 = columSmall[i];
+            float resultadoQuociente;
+            resultadoQuociente = valor1/valor2;
+            System.out.println(valor2);
+            //quociente[i-1] = resultadoQuociente;
+            
+        }
+
         return new float[rows];
     }
 
@@ -144,6 +154,22 @@ public class Main {
         //simplex.fillTable(data);
         //simplex.print();
         simplex.findEnteringColumn(data, coluna);
+
+        /*
+         
+
+          for(int a = 0; a < data.length; a++){
+            System.out.println(rigthCollum[a]);
+          }
+
+
+         */
+
+         //Durante a interação acontece o erro.
+         for(int a = 0; a < quociente.length; a++){
+            System.out.println(quociente[0]);
+         }
+      
 
         /*   
         while (simplex.compute() == ERROR.NOT_OPTIMAL) {
