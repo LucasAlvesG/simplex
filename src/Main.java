@@ -1,10 +1,8 @@
-import java.util.Arrays;
-
 public class Main {
     private int rows, cols;
     private float[][] table;
     private boolean solutionIsUnbounded = false;
-    private int [] columSmall;
+    private static int [] columSmall;
     private static int [] rigthCollum;
     private static float [] quociente;
 
@@ -67,17 +65,14 @@ public class Main {
     
 
     private int findEnteringColumn(float [][] arrayNovo, int coluna) {
-       
         this.rows = 5;
         this.cols = 6;
 
         int [] menorLinha = new int[arrayNovo.length];
-        int position = -1;
-        int auxiliar = 0;
+        int auxiliar = 1000;
         int posicaoMenor = 0;
         int specificColum = -1;
         int [] colunaRigth = new int[arrayNovo.length];
-    
 
         for(int k = 0; k < arrayNovo.length; k++){
             for(int w = 0; w < arrayNovo.length; w++){
@@ -85,51 +80,45 @@ public class Main {
                     auxiliar = (int) arrayNovo[k][w];
                     posicaoMenor = w;
                 }
-
                 colunaRigth [k] = (int) arrayNovo[k][coluna - 1]; 
-
             }
         }
 
         if (rows > 0 && cols > 0) {
                 for(int j = 0; j < arrayNovo.length; j++){
-    
-                    if (position != -1) {
-                        menorLinha [j] = (int) arrayNovo[j][posicaoMenor];
-                    }
 
+                    menorLinha [j] = (int) arrayNovo[j][posicaoMenor];
                     System.out.println(arrayNovo[j][posicaoMenor]);
 
                 }      
     
         }
+        columSmall = new int[menorLinha.length];
+
+        for(int i = 0; i < menorLinha.length; i++){
+            columSmall[i] = menorLinha[i];
+        }
         
         rigthCollum = colunaRigth;
-        columSmall = menorLinha;
-
         return specificColum;
     }
         
+    private static float[] calculateRatios() {
+        quociente = new float[rigthCollum.length];
+        float rows [] = new float[rigthCollum.length];
 
-
-    private float[] calculateRatios() {
-        
-        //Dando erro no valor 1 e valor 2 tipo de erro NullPointerException
-        for(int i = 1; i < rigthCollum.length - 1; i++){
-            int valor1 = rigthCollum[i];
-            int valor2 = columSmall[i];
-            float resultadoQuociente;
-            resultadoQuociente = valor1/valor2;
-            System.out.println(valor2);
-            //quociente[i-1] = resultadoQuociente;
+        for(int i = 0; i < rigthCollum.length; i++){
+            float resultadoQuociente = 0;
+            if(i==0){resultadoQuociente = 0;}
+            else {resultadoQuociente = rigthCollum[i]/columSmall[i];}
+            rows[i] = resultadoQuociente;
+            quociente[i] = resultadoQuociente;
             
         }
-
-        return new float[rows];
+        return rows;
     }
 
     private int findSmallestValue(float[] ratios) {
-        // Implementar lógica para encontrar o menor valor
         return 0;
     }
 
@@ -140,41 +129,28 @@ public class Main {
     public static void main(String[] args) {
 
         int coluna = 7;
-        int linha = 3;
+        int linha = 4;
 
-        // Exemplo de uso
         float[][] data = {
             {1, -3, -2, 0, 0, 0,0},
             {0, 2, 1, 1, 0, 0,100},
             {0, 1, 1, 0, 1, 0,80},
             {0, 1, 0, 0, 0, 1,40},
         };
-
+        
         Main simplex = new Main(linha, coluna);
-        //simplex.fillTable(data);
-        //simplex.print();
         simplex.findEnteringColumn(data, coluna);
+        
+        
+        calculateRatios();
 
-        /*
-         
+        // imprimeTeste(quociente);
+    }
 
-          for(int a = 0; a < data.length; a++){
-            System.out.println(rigthCollum[a]);
-          }
-
-
-         */
-
-         //Durante a interação acontece o erro.
-         for(int a = 0; a < quociente.length; a++){
-            System.out.println(quociente[0]);
-         }
-      
-
-        /*   
-        while (simplex.compute() == ERROR.NOT_OPTIMAL) {
-            simplex.print();
+    public static void imprimeTeste (float[]teste){
+        for(int i = 0; i< teste.length; i++){
+            System.out.println("___________________");
+            System.out.println(teste[i]);
         }
-         */
     }
 }
