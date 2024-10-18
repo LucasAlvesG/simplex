@@ -36,7 +36,7 @@ public class Main {
         }
     }
 
-    public ERROR compute(float [][] dataArray, int colunaDois) {
+    public ERROR compute(float [][] dataArray, int colunaDois, float columSmall) {
         if (checkOptimality()) {
             return ERROR.IS_OPTIMAL;
         }
@@ -46,7 +46,7 @@ public class Main {
 
         float[] ratios = calculateRatios();
         if (solutionIsUnbounded) return ERROR.UNBOUNDED;
-        int pivotRow = findSmallestValue(ratios);
+        float [] pivotRow = findSmallestValue(columSmall, ratios);
 
         formNextTableau(pivotRow, pivotColumn);
         return ERROR.NOT_OPTIMAL;
@@ -118,11 +118,34 @@ public class Main {
         return rows;
     }
 
-    private int findSmallestValue(float[] ratios) {
-        return 0;
+    //Tentei fazer
+    private float[] findSmallestValue(float columSmall, float [] ratios) {
+
+        ratios = new float[rigthCollum.length];
+        float miniValue = Float.MAX_VALUE;
+
+        for(int i = 0; i < rigthCollum.length; i++){
+            float resultadoQuociente = 0;
+            resultadoQuociente = rigthCollum[i] / columSmall;
+            ratios[i] = resultadoQuociente;
+
+
+            if (resultadoQuociente < miniValue) {
+                miniValue = resultadoQuociente;
+                ratios[i] = miniValue;
+                System.out.println(ratios[i]);
+            }
+            
+
+        }
+
+  
+
+
+        return ratios;
     }
 
-    private void formNextTableau(int pivotRow, int pivotColumn) {
+    private void formNextTableau(float [] pivotRow, int pivotColumn) {
         // Implementar formação do próximo tableau
     }
 
@@ -142,9 +165,15 @@ public class Main {
         simplex.findEnteringColumn(data, coluna);
         
         
-        calculateRatios();
+       // calculateRatios();
 
         // imprimeTeste(quociente);
+
+       // simplex.findSmallestValue(coluna, quociente);
+        
+    
+
+       
     }
 
     public static void imprimeTeste (float[]teste){
