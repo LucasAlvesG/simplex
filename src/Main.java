@@ -1,11 +1,12 @@
 public class Main {
     private int rows, cols;
-    private float[][] table;
+    private static float[][] table;
     private boolean solutionIsUnbounded = false;
     private static int [] columSmall;
     private static int [] rigthCollum;
     private static float [] quociente;
     private static int rowPivo;
+    private static int pivoPosition;
 
 
     public static enum ERROR {
@@ -118,6 +119,8 @@ public class Main {
 
     private void findValueInColunAndRow() {
 
+        //Achamos o coeficiente pivo.
+
         int coeficientePi = 0;
 
         for(int i = 1; i < quociente.length; i++){
@@ -130,17 +133,59 @@ public class Main {
         }
 
         rowPivo = columSmall[coeficientePi];
+        pivoPosition = coeficientePi;
 
     }
 
-    private void updateLineAndColumn(float [] pivotRow, int pivotColumn) {
-        // Implementar formação do próximo tableau
+    public void updateLines() {
+
+        float [] linhaAtual;
+
+        int fatorPivoAtual;
+
+        float [] linhaPivo;
+
+       for(int i = 0; i < table.length; i++){
+            if(i == 0){
+                linhaAtual = new float[table[i].length];
+            
+                linhaAtual = table[i];
+            
+                fatorPivoAtual = columSmall[i];
+            
+                linhaPivo = table[rowPivo];
+                
+                
+                
+            }
+       } 
+    }
+
+    public static float [] productLinePivoCoefici(float [] linhaAtual, int fatorPivoAtual){
+
+        float [] finaLinha = new float[linhaAtual.length];
+        float [] newLine = new float[linhaAtual.length];
+
+        for (int i = 0; i < linhaAtual.length - 1; i++) {
+            for(int j = 0; j < table[pivoPosition].length - 1; j++){
+                newLine[j] = -fatorPivoAtual  * table[pivoPosition][j];
+                System.out.println(newLine[j]);
+            }
+        }
+
+        for (int i = 0; i < newLine.length; i++) {
+            finaLinha[i] = linhaAtual[i] + newLine[i];
+        }
+
+        return finaLinha;
     }
 
     public static void main(String[] args) {
 
         int coluna = 7;
         int linha = 4;
+
+        
 
         float[][] data = {
             {1, -3, -2, 0, 0, 0,0},
@@ -160,8 +205,14 @@ public class Main {
        // simplex.findSmallestValue(coluna, quociente);
         
        simplex.findValueInColunAndRow();
-    
-        System.out.println(rowPivo);
+
+       int fat = 0;    
+       float [] teste1 = {1,-3,-2,0,0,0,0}; 
+
+       productLinePivoCoefici(teste1, fat);
+
+      //imprimeTeste(productLinePivoCoefici(teste1, fat));
+
 
     
 
