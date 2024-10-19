@@ -162,19 +162,26 @@ public class Main {
     }
 
     public static float [] productLinePivoCoefici(float [] linhaAtual, int fatorPivoAtual){
+        
+        float[][] data = {
+            {1, -3, -2, 0, 0, 0,0},
+            {0, 2, 1, 1, 0, 0,100},
+            {0, 1, 1, 0, 1, 0,80},
+            {0, 1, 0, 0, 0, 1,40},
+        };
 
         float [] finaLinha = new float[linhaAtual.length];
         float [] newLine = new float[linhaAtual.length];
 
-        for (int i = 0; i < linhaAtual.length - 1; i++) {
-            for(int j = 0; j < table[pivoPosition].length - 1; j++){
-                newLine[j] = -fatorPivoAtual  * table[pivoPosition][j];
-                System.out.println(newLine[j]);
+        for (int i = 0; i < linhaAtual.length; i++) {
+            for(int j = 0; j < data[pivoPosition].length; j++){
+                newLine[j] = - columSmall[fatorPivoAtual] * data[pivoPosition][j];     
             }
         }
 
         for (int i = 0; i < newLine.length; i++) {
             finaLinha[i] = linhaAtual[i] + newLine[i];
+            System.out.println(finaLinha[i]);
         }
 
         return finaLinha;
@@ -185,15 +192,16 @@ public class Main {
         int coluna = 7;
         int linha = 4;
 
-        
-
         float[][] data = {
             {1, -3, -2, 0, 0, 0,0},
             {0, 2, 1, 1, 0, 0,100},
             {0, 1, 1, 0, 1, 0,80},
             {0, 1, 0, 0, 0, 1,40},
         };
-        
+
+        insercaoTable(data);
+
+    
         Main simplex = new Main(linha, coluna);
         simplex.findEnteringColumn(data, coluna);
         
@@ -206,18 +214,27 @@ public class Main {
         
        simplex.findValueInColunAndRow();
 
-       int fat = 0;    
-       float [] teste1 = {1,-3,-2,0,0,0,0}; 
+       //int fat = 0;    
+       //float [] teste1 = {1,-3,-2,0,0,0,0}; 
 
-       productLinePivoCoefici(teste1, fat);
+      // productLinePivoCoefici(teste1, fat);
 
-      //imprimeTeste(productLinePivoCoefici(teste1, fat));
-
-
-    
-
-       
+      //imprimeTeste(productLinePivoCoefici(teste1, fat);
     }
+
+    private static void insercaoTable(float [][] dataArray) {
+
+        table = new float[dataArray.length][dataArray[0].length];
+
+       for (int i = 0; i < dataArray.length; i++) {
+         for (int j = 0; j < dataArray.length; j++) {
+             table[i][j] = dataArray[i][j];
+             System.out.print(table[i][j] + "  ");
+         }
+            System.out.println(" ");
+       }
+    }
+
 
     public static void imprimeTeste (float[]teste){
         for(int i = 0; i< teste.length; i++){
