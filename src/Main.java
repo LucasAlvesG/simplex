@@ -5,6 +5,7 @@ public class Main {
     private static int [] columSmall;
     private static int [] rigthCollum;
     private static float [] quociente;
+    private static int rowPivo;
 
 
     public static enum ERROR {
@@ -23,16 +24,16 @@ public class Main {
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
                 String value = String.format("%.2f", table[i][j]);
-                System.out.print(value + "\t");
+                //System.out.print(value + "\t");
             }
-            System.out.println();
+            //System.out.println();
         }
-        System.out.println();
+       // System.out.println();
     }
 
     public void fillTable(float[][] data) {
         for (int i = 0; i < table.length; i++) {
-            System.arraycopy(data[i], 0, this.table[i], 0, data[i].length);
+           // System.arraycopy(data[i], 0, this.table[i], 0, data[i].length);
         }
     }
 
@@ -42,13 +43,10 @@ public class Main {
         }
 
         int pivotColumn = findEnteringColumn(dataArray, colunaDois);
-        System.out.println("Pivot Column: " + pivotColumn);
+       // System.out.println("Pivot Column: " + pivotColumn);
 
         float[] ratios = calculateRatios();
         if (solutionIsUnbounded) return ERROR.UNBOUNDED;
-        float [] pivotRow = findValueInColunAndRow(ratios);
-
-        updateLineAndColumn(pivotRow, pivotColumn);
         return ERROR.NOT_OPTIMAL;
     }
 
@@ -88,7 +86,7 @@ public class Main {
                 for(int j = 0; j < arrayNovo.length; j++){
 
                     menorLinha [j] = (int) arrayNovo[j][posicaoMenor];
-                    System.out.println(arrayNovo[j][posicaoMenor]);
+                   // System.out.println(arrayNovo[j][posicaoMenor]);
 
                 }      
     
@@ -113,32 +111,26 @@ public class Main {
             else {resultadoQuociente = rigthCollum[i]/columSmall[i];}
             rows[i] = resultadoQuociente;
             quociente[i] = resultadoQuociente;
-            System.out.println(quociente[i]);
+           // System.out.println(quociente[i]);
         }
         return rows;
     }
 
-    private float[] findValueInColunAndRow(float [] ratios) {
+    private void findValueInColunAndRow() {
 
-        ratios = new float[rigthCollum.length];
-        float miniValue = Float.MAX_VALUE;
+        int coeficientePi = 0;
 
-        for(int i = 0; i < rigthCollum.length; i++){
-            float resultadoQuociente = 0;
-            resultadoQuociente = rigthCollum[i] / columSmall [i];
-            ratios[i] = resultadoQuociente;
-
-
-            if (resultadoQuociente < miniValue) {
-                miniValue = resultadoQuociente;
-                ratios[i] = miniValue;
-                System.out.println(ratios[i]);
+        for(int i = 1; i < quociente.length; i++){
+            if (i == 1) {
+                coeficientePi = i;
+            }else if (i > 1) {
+                coeficientePi = quociente[coeficientePi] < quociente[i]? coeficientePi: i;
             }
-            
 
         }
 
-        return ratios;
+        rowPivo = columSmall[coeficientePi];
+
     }
 
     private void updateLineAndColumn(float [] pivotRow, int pivotColumn) {
@@ -161,12 +153,16 @@ public class Main {
         simplex.findEnteringColumn(data, coluna);
         
         
-       //calculateRatios();
+       calculateRatios(); //Não comente ele.
 
         //imprimeTeste(quociente);
 
        // simplex.findSmallestValue(coluna, quociente);
         
+       simplex.findValueInColunAndRow();
+    
+        System.out.println(rowPivo);
+
     
 
        
