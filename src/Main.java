@@ -36,7 +36,7 @@ public class Main {
         }
     }
 
-    public ERROR compute(float [][] dataArray, int colunaDois, float columSmall) {
+    public ERROR compute(float [][] dataArray, int colunaDois) {
         if (checkOptimality()) {
             return ERROR.IS_OPTIMAL;
         }
@@ -46,9 +46,9 @@ public class Main {
 
         float[] ratios = calculateRatios();
         if (solutionIsUnbounded) return ERROR.UNBOUNDED;
-        float [] pivotRow = findSmallestValue(columSmall, ratios);
+        float [] pivotRow = findValueInColunAndRow(ratios);
 
-        formNextTableau(pivotRow, pivotColumn);
+        updateLineAndColumn(pivotRow, pivotColumn);
         return ERROR.NOT_OPTIMAL;
     }
 
@@ -113,20 +113,19 @@ public class Main {
             else {resultadoQuociente = rigthCollum[i]/columSmall[i];}
             rows[i] = resultadoQuociente;
             quociente[i] = resultadoQuociente;
-            
+            System.out.println(quociente[i]);
         }
         return rows;
     }
 
-    //Tentei fazer
-    private float[] findSmallestValue(float columSmall, float [] ratios) {
+    private float[] findValueInColunAndRow(float [] ratios) {
 
         ratios = new float[rigthCollum.length];
         float miniValue = Float.MAX_VALUE;
 
         for(int i = 0; i < rigthCollum.length; i++){
             float resultadoQuociente = 0;
-            resultadoQuociente = rigthCollum[i] / columSmall;
+            resultadoQuociente = rigthCollum[i] / columSmall [i];
             ratios[i] = resultadoQuociente;
 
 
@@ -139,13 +138,10 @@ public class Main {
 
         }
 
-  
-
-
         return ratios;
     }
 
-    private void formNextTableau(float [] pivotRow, int pivotColumn) {
+    private void updateLineAndColumn(float [] pivotRow, int pivotColumn) {
         // Implementar formação do próximo tableau
     }
 
@@ -165,9 +161,9 @@ public class Main {
         simplex.findEnteringColumn(data, coluna);
         
         
-       // calculateRatios();
+       //calculateRatios();
 
-        // imprimeTeste(quociente);
+        //imprimeTeste(quociente);
 
        // simplex.findSmallestValue(coluna, quociente);
         
