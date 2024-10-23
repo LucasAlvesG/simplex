@@ -6,16 +6,18 @@ public class Pivot {
         float pivotValue = tableLocal[pivotRow][pivotColumn];
 
         for (int j = 0; j < tableLocal[0].length; j++) {
-            tableLocal[pivotRow][j] = tableLocal[pivotRow][j] / pivotValue;
+            tableLocal[pivotRow][j] /= pivotValue;
         }
 
         for (int i = 0; i < tableLocal.length; i++) {
             if (i != pivotRow) {
-                float factor = tableLocal[i][pivotColumn];
+                float fator = tableLocal[i][pivotColumn];
                 for (int j = 0; j < tableLocal[0].length; j++) {
-                    tableLocal[i][j] = tableLocal[i][j] + (-factor * tableLocal[pivotRow][j]);
+                    tableLocal[i][j] -= fator * tableLocal[pivotRow][j];
                 }
             }
         }
+
+        PrintFinalResolution.mostrarMatriz(Table.table, PrintFinalResolution.variaveisBasicas);
     }
 }

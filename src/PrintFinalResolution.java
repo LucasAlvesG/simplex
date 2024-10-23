@@ -18,9 +18,27 @@ public class PrintFinalResolution {
         }
     }
 
-    // Atualiza as variáveis básicas conforme elas entram e saem da base
     public static void atualizarVariaveis(int pivotRow, int pivotColumn) {
         variaveisBasicas[pivotRow] = variaveis[pivotColumn];
+    }
+
+    public static void mostrarMatriz(float[][] matriz, String[] variaveisBasicas) {
+        System.out.println("Matriz:");
+
+        for (int coluna = 0; coluna < matriz[0].length; coluna++) {
+            System.out.print("Col " + (coluna + 1) + "\t");
+        }
+        System.out.println();
+
+        for (int linha = 0; linha < matriz.length; linha++) {
+            for (int coluna = 0; coluna < matriz[0].length; coluna++) {
+                System.out.printf("%.2f\t", matriz[linha][coluna]);
+            }
+            System.out.println();
+        }
+
+        System.out.println("");
+        System.out.println("");
     }
 
 }
